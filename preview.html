@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High-Demand Jobs — Design Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Hanken+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-primary: #004cf0;
+    --color-primary-dark: #003bb8;
+    --color-primary-light: #e8efff;
+    --color-accent-green: #04c432;
+    --color-accent-amber: #d97706;
+    --color-accent-pink: #fd62ef;
+    --color-accent-red: #dc2626;
+    --color-bg: #ffffff;
+    --color-bg-alt: #f1f1f1;
+    --color-bg-dark: #090909;
+    --color-bg-card: #ffffff;
+    --color-text: #090909;
+    --color-text-secondary: #444444;
+    --color-text-muted: #666666;
+    --color-border: #d9d9d9;
+    --color-border-light: #e5e5e5;
+    --content-width: 1600px;
+    --ease-smooth: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --space-1: 2px;
+    --space-2: 4px;
+    --space-3: 8px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 20px;
+    --space-7: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-20: 80px;
+    --space-24: 96px;
+    --space-32: 128px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-text);
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Hanken Grotesk', Tahoma, sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    font-weight: 600;
+  }
+
+  .container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
+  }
+
+  .section { padding: var(--space-24) 0; }
+  .section-alt { background: var(--color-bg-alt); }
+  .section-dark { background: var(--color-bg-dark); color: white; }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: var(--space-5);
+  }
+
+  .display {
+    font-family: 'Hanken Grotesk', Tahoma, sans-serif;
+    font-size: 94px;
+    font-weight: 600;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+  }
+
+  h1 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 70px; font-weight: 600; line-height: 1.0; letter-spacing: -0.03em; }
+  h2 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+  h3 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 32px; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
+
+  @media (max-width: 768px) {
+    .display { font-size: 56px; }
+    h1 { font-size: 40px; }
+    h2 { font-size: 36px; }
+    h3 { font-size: 24px; }
+    .section { padding: var(--space-16) 0; }
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 768px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 0;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .badge-bonus {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  .badge-bonus-high {
+    background: #f59e0b;
+    color: white;
+  }
+  .badge-salary {
+    background: #04c432;
+    color: white;
+  }
+  .badge-remote {
+    background: #f1f1f1;
+    color: #090909;
+  }
+  .badge-urgent {
+    background: #dc2626;
+    color: white;
+  }
+  .badge-openings {
+    background: #090909;
+    color: white;
+  }
+  .badge-white {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .skill-tag {
+    display: inline-flex;
+    padding: 3px 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    background: #f1f1f1;
+    color: #444;
+    border-radius: 0;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    border: 2px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--color-text);
+    color: white;
+    border-color: var(--color-text);
+  }
+  .btn-primary:hover {
+    background: #222;
+    border-color: #222;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-text);
+  }
+  .btn-secondary:hover {
+    background: var(--color-text);
+    color: white;
+  }
+  .btn-white {
+    background: transparent;
+    color: white;
+    border-color: white;
+  }
+  .btn-white:hover {
+    background: white;
+    color: var(--color-text);
+  }
+
+  .btn .icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    transition: transform 0.3s var(--ease-smooth);
+  }
+  .btn:hover .icon-wrap {
+    transform: translateX(3px);
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--color-border-light);
+    border-radius: 0;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s var(--ease-smooth);
+    position: relative;
+  }
+  .card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-blue {
+    background: var(--color-primary);
+    border: none;
+    color: white;
+  }
+  .card-blue .skill-tag {
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+  .card-blue .btn {
+    border-color: white;
+    color: white;
+  }
+  .card-blue .btn:hover {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .card-title { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 24px; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+  .card-meta { color: var(--color-text-secondary); font-size: 14px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .card-skills { display: flex; gap: 4px; flex-wrap: wrap; }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 600ms var(--ease-smooth) forwards;
+  }
+  .fade-up:nth-child(1) { animation-delay: 0ms; }
+  .fade-up:nth-child(2) { animation-delay: 80ms; }
+  .fade-up:nth-child(3) { animation-delay: 160ms; }
+  .fade-up:nth-child(4) { animation-delay: 240ms; }
+  .fade-up:nth-child(5) { animation-delay: 320ms; }
+  .fade-up:nth-child(6) { animation-delay: 400ms; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .swatch-grid { display: flex; gap: 20px; flex-wrap: wrap; margin: 32px 0; }
+  .swatch { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .swatch-circle {
+    width: 64px; height: 64px;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .swatch-label { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #666; }
+  .swatch-hex { font-family: 'Space Mono', monospace; font-size: 10px; color: #999; }
+
+  .type-demo { margin: 20px 0; }
+  .type-demo .label { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 8px; }
+
+  hr { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+
+  .marquee-track {
+    overflow: hidden;
+    padding: 24px 0;
+  }
+  .marquee-content {
+    display: flex;
+    gap: 48px;
+    animation: marquee 20s linear infinite;
+    width: max-content;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .step-number {
+    font-family: 'Hanken Grotesk', Tahoma, sans-serif;
+    font-size: 128px;
+    font-weight: 600;
+    line-height: 0.8;
+    color: #090909;
+    opacity: 0.04;
+    position: absolute;
+    top: 0;
+    right: 16px;
+    pointer-events: none;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 32px;
+  }
+  .hero-stat-value {
+    font-family: 'Hanken Grotesk', Tahoma, sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .hero-stats { flex-direction: column; gap: 24px; }
+  }
+  .pixel-box {
+    position: relative;
+    z-index: 2;
+    height: 10rem;
+    color: var(--color-bg-alt);
+    margin-bottom: -1px;
+    overflow: hidden;
+  }
+  .pixel-box.is-blue { color: var(--color-primary); }
+  .pixel-box.is-white { color: white; }
+  .pixel-box.is-dark { color: var(--color-bg-dark); }
+  .pixel-box_canvas {
+    display: block;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  @media (max-width: 479px) {
+    .pixel-box { height: 9.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<section class="section" style="padding-bottom:0;">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;">
+      <a href="#" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <svg width="36" height="21" viewBox="0 0 32 19" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <path d="M25.6057 0.0015H21.6465L25.3332 10.5584L26.3799 13.7285L28.2352 18.8243H31.9998L25.6057 0.0015Z" fill="#090909"/>
+          <path d="M10.4012 0.0015H7.5291V3.7661H10.3877C14.1029 3.7436 16.7054 5.536 16.7054 9.4129C16.7054 13.2898 14.1044 15.0822 10.3877 15.0598H7.5291V3.7661H3.7645V15.0598H0V18.8243H10.4012C16.0001 18.8243 20.7066 15.217 20.7066 9.4114C20.7066 3.6058 16.0001 0 10.4012 0V0.0015Z" fill="#090909"/>
+          <rect x="0" y="0" width="4" height="4" rx="1" fill="#04c432"/>
+        </svg>
+        <span style="font-family:'Hanken Grotesk',Tahoma,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.02em;">high-demand<span style="color:var(--color-primary);">.jobs</span></span>
+      </a>
+      <div style="display:flex;gap:24px;align-items:center;">
+        <a href="#" style="font-size:14px;color:var(--color-text-secondary);text-decoration:none;transition:color 0.2s;">All Jobs</a>
+        <a href="#" style="font-size:14px;color:var(--color-text-secondary);text-decoration:none;transition:color 0.2s;">Categories</a>
+        <a href="#" style="font-size:14px;color:var(--color-text-secondary);text-decoration:none;transition:color 0.2s;">Top Bonuses</a>
+        <a class="btn btn-primary" href="#" style="padding:10px 24px;font-size:12px;">Apply Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" style="padding-top:80px;padding-bottom:100px;">
+  <div class="container">
+    <div style="max-width:900px;">
+      <p class="eyebrow" style="color:rgba(255,255,255,0.5);">217 active positions · Remote · Full-time & Contract</p>
+      <h1 style="color:white;font-size:94px;margin-bottom:20px;">
+        Train AI.<br>Get Paid.
+      </h1>
+      <p style="font-size:20px;color:rgba(255,255,255,0.7);max-width:600px;line-height:1.4;margin-bottom:32px;">
+        Domain experts earning $45–$2M/year. Referral bonuses up to $2,000. Apply directly to micro1.
+      </p>
+      <a class="btn btn-white" href="#" style="padding:16px 40px;">
+        Browse All Jobs
+        <span class="icon-wrap" style="color:inherit;">→</span>
+      </a>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value" style="color:white;">$2K</div>
+          <div class="hero-stat-label">max referral bonus</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" style="color:white;">217</div>
+          <div class="hero-stat-label">open positions</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" style="color:white;">$2M</div>
+          <div class="hero-stat-label">top annual salary</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" style="padding-top:0;padding-bottom:80px;">
+  <div class="container">
+    <div class="marquee-track" style="border-top:1px solid rgba(255,255,255,0.1);border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div class="marquee-content" style="display:flex;gap:64px;align-items:center;padding:16px 0;">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">AI Research</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Software Engineering</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Language & Translation</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Finance & Accounting</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Legal</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Healthcare & Science</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Game Development</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">·</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.05em;">Business & Operations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-blue"><canvas class="pixel-box_canvas"></canvas></div>
+
+<section class="section-alt">
+  <div class="container">
+    <p class="eyebrow">Color Palette</p>
+    <h2>Colors</h2>
+    <p style="color:var(--color-text-secondary);margin-bottom:32px;max-width:600px;">dataannotation.tech-inspired palette — blue accent, near-black text, white backgrounds, sharp all around.</p>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#004cf0;"></div>
+        <span class="swatch-label">Primary</span>
+        <span class="swatch-hex">#004CF0</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#090909;"></div>
+        <span class="swatch-label">Text</span>
+        <span class="swatch-hex">#090909</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#04c432;"></div>
+        <span class="swatch-label">Green</span>
+        <span class="swatch-hex">#04C432</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#f59e0b;"></div>
+        <span class="swatch-label">Amber</span>
+        <span class="swatch-hex">#F59E0B</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#fd62ef;"></div>
+        <span class="swatch-label">Pink</span>
+        <span class="swatch-hex">#FD62EF</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#dc2626;"></div>
+        <span class="swatch-label">Red</span>
+        <span class="swatch-hex">#DC2626</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#f1f1f1;"></div>
+        <span class="swatch-label">Bg Alt</span>
+        <span class="swatch-hex">#F1F1F1</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#d9d9d9;"></div>
+        <span class="swatch-label">Border</span>
+        <span class="swatch-hex">#D9D9D9</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-white"><canvas class="pixel-box_canvas"></canvas></div>
+
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">Typography</p>
+    <h2>Fonts</h2>
+    <div class="grid-2" style="margin-top:32px;">
+      <div>
+        <div class="type-demo">
+          <p class="label">Headings — Hanken Grotesk (600)</p>
+          <p style="font-family:'Hanken Grotesk',Tahoma,sans-serif;font-size:70px;font-weight:600;letter-spacing:-0.03em;line-height:1;">Train AI. Get Paid.</p>
+          <p style="font-family:'Hanken Grotesk',Tahoma,sans-serif;font-size:64px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;margin-top:16px;">Review our open roles</p>
+          <p style="font-family:'Hanken Grotesk',Tahoma,sans-serif;font-size:32px;font-weight:600;letter-spacing:-0.02em;line-height:1.3;margin-top:16px;">Member of Technical Staff</p>
+        </div>
+      </div>
+      <div>
+        <div class="type-demo">
+          <p class="label">Body — Inter (400)</p>
+          <p style="font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;">Work on paid, hourly, remote projects that match your skills. Work whenever and wherever you want. Including hundreds of general, coding, health, finance, and legal projects.</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:var(--color-text-secondary);margin-top:12px;">Domain Experts: $50–$100+/hr — Generalists: $25–$30+/hr</p>
+        </div>
+        <div class="type-demo" style="margin-top:24px;">
+          <p class="label">Monospace — Space Mono (for CTAs & tags)</p>
+          <p style="font-family:'Space Mono',monospace;font-size:14px;">APPLY NOW  →</p>
+          <p style="font-family:'Space Mono',monospace;font-size:10px;margin-top:8px;color:#666;">Machine Learning  ·  Python  ·  Financial Planning</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-blue"><canvas class="pixel-box_canvas"></canvas></div>
+
+<section class="section-alt">
+  <div class="container">
+    <p class="eyebrow">Components</p>
+    <h2 style="margin-bottom:48px;">Job Cards</h2>
+
+    <div class="grid-3">
+      <div class="card fade-up">
+        <div class="card-badges">
+          <span class="badge badge-salary">$600K - $2M/yr</span>
+          <span class="badge badge-bonus-high">$2,000 bonus</span>
+          <span class="badge badge-remote">Remote</span>
+        </div>
+        <h3 class="card-title">Member of Technical Staff (Frontier AI)</h3>
+        <div class="card-meta">
+          <span>Full-time</span>
+          <span>·</span>
+          <span>1 opening</span>
+        </div>
+        <div class="card-skills">
+          <span class="skill-tag">RL</span>
+          <span class="skill-tag">ML Data</span>
+          <span class="skill-tag">Research</span>
+          <span class="skill-tag">Ops</span>
+        </div>
+        <a class="btn btn-primary" href="#" style="margin-top:8px;width:100%;justify-content:center;">
+          Apply Now
+          <span class="icon-wrap">→</span>
+        </a>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-badges">
+          <span class="badge badge-salary">$32 - $95/hr</span>
+          <span class="badge badge-bonus">$500 bonus</span>
+          <span class="badge badge-remote">Remote</span>
+        </div>
+        <h3 class="card-title">Chinese Language Expert</h3>
+        <div class="card-meta">
+          <span>Full-time</span>
+          <span>·</span>
+          <span>20 openings</span>
+        </div>
+        <div class="card-skills">
+          <span class="skill-tag">Chinese</span>
+          <span class="skill-tag">NLP</span>
+          <span class="skill-tag">Detail</span>
+        </div>
+        <a class="btn btn-primary" href="#" style="margin-top:8px;width:100%;justify-content:center;">
+          Apply Now
+          <span class="icon-wrap">→</span>
+        </a>
+      </div>
+
+      <div class="card card-blue fade-up">
+        <div class="card-badges">
+          <span class="badge badge-white">$45 - $65/hr</span>
+          <span class="badge badge-bonus">$100 bonus</span>
+          <span class="badge badge-white">Remote</span>
+        </div>
+        <h3 class="card-title" style="color:white;">Financial Planning & Analysis Expert</h3>
+        <div class="card-meta" style="color:rgba(255,255,255,0.7);">
+          <span>Contract</span>
+          <span>·</span>
+          <span>50 openings</span>
+        </div>
+        <div class="card-skills">
+          <span class="skill-tag" style="background:rgba(255,255,255,0.15);color:white;">FP&A</span>
+          <span class="skill-tag" style="background:rgba(255,255,255,0.15);color:white;">SaaS</span>
+          <span class="skill-tag" style="background:rgba(255,255,255,0.15);color:white;">Modeling</span>
+        </div>
+        <a class="btn btn-white" href="#" style="margin-top:8px;width:100%;justify-content:center;">
+          Apply Now
+          <span class="icon-wrap" style="color:inherit;">→</span>
+        </a>
+      </div>
+    </div>
+
+    <p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--color-text-muted);margin-top:24px;text-align:center;">Sharp 0px radius · Blue highlight card for featured roles · Space Mono CTAs</p>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-white"><canvas class="pixel-box_canvas"></canvas></div>
+
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">UI Elements</p>
+    <h2 style="margin-bottom:32px;">Buttons & Badges</h2>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+      <a class="btn btn-primary" href="#">
+        Apply Now
+        <span class="icon-wrap">→</span>
+      </a>
+      <a class="btn btn-secondary" href="#">Learn More</a>
+      <a class="btn btn-secondary" style="border-style:dashed;" href="#">Save for Later</a>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:32px;">
+      <span class="badge badge-bonus-high">$2,000 bonus</span>
+      <span class="badge badge-bonus">$1,000 bonus</span>
+      <span class="badge badge-bonus">$500 bonus</span>
+      <span class="badge badge-salary">$400K - $1.5M/yr</span>
+      <span class="badge badge-salary">$45 - $65/hr</span>
+      <span class="badge badge-remote">Remote</span>
+      <span class="badge badge-remote">Full-time</span>
+      <span class="badge badge-urgent">Closing soon</span>
+      <span class="badge badge-openings">60 openings</span>
+    </div>
+
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:24px;">
+      <span class="skill-tag">Machine Learning</span>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">Financial Planning</span>
+      <span class="skill-tag">Translation</span>
+      <span class="skill-tag">Cocos2d-x</span>
+      <span class="skill-tag">GCP</span>
+      <span class="skill-tag">Robotics</span>
+    </div>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-dark"><canvas class="pixel-box_canvas"></canvas></div>
+
+<section class="section section-dark">
+  <div class="container">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.4);">Process</p>
+    <h2 style="color:white;margin-bottom:64px;">How it works</h2>
+
+    <div class="grid-3">
+      <div style="position:relative;border-top:2px solid rgba(255,255,255,0.15);padding-top:32px;">
+        <div class="step-number">01</div>
+        <h3 style="color:white;font-size:24px;margin-bottom:12px;">Browse</h3>
+        <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.5;">Find a role that matches your expertise across 217 positions in AI, engineering, finance, legal, and more.</p>
+      </div>
+      <div style="position:relative;border-top:2px solid rgba(255,255,255,0.15);padding-top:32px;">
+        <div class="step-number">02</div>
+        <h3 style="color:white;font-size:24px;margin-bottom:12px;">Click</h3>
+        <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.5;">Hit "Apply Now" to go directly to the official micro1 application with your referral already tracked.</p>
+      </div>
+      <div style="position:relative;border-top:2px solid rgba(255,255,255,0.15);padding-top:32px;">
+        <div class="step-number">03</div>
+        <h3 style="color:white;font-size:24px;margin-bottom:12px;">Get Hired</h3>
+        <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.5;">Top performers earn salaries up to $2M/year with referral bonuses paid on successful placements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-blue"><canvas class="pixel-box_canvas"></canvas></div>
+
+<section class="section-alt">
+  <div class="container">
+      <p class="eyebrow">Get started</p>
+      <h2 style="margin-bottom:16px;">Find your next role</h2>
+      <p style="color:var(--color-text-secondary);margin-bottom:32px;">217 remote positions. No recruiters. No interviews. Just apply directly to micro1.</p>
+      <a class="btn btn-primary" href="#" style="padding:20px 48px;">
+        Browse All Jobs
+        <span class="icon-wrap">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section section-dark" style="padding:48px 0;">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <svg width="28" height="16" viewBox="0 0 32 19" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <path d="M25.6057 0.0015H21.6465L25.3332 10.5584L26.3799 13.7285L28.2352 18.8243H31.9998L25.6057 0.0015Z" fill="white"/>
+          <path d="M10.4012 0.0015H7.5291V3.7661H10.3877C14.1029 3.7436 16.7054 5.536 16.7054 9.4129C16.7054 13.2898 14.1044 15.0822 10.3877 15.0598H7.5291V3.7661H3.7645V15.0598H0V18.8243H10.4012C16.0001 18.8243 20.7066 15.217 20.7066 9.4114C20.7066 3.6058 16.0001 0 10.4012 0V0.0015Z" fill="white"/>
+          <rect x="0" y="0" width="4" height="4" rx="1" fill="#04c432"/>
+        </svg>
+        <span style="font-family:'Hanken Grotesk',Tahoma,sans-serif;font-size:20px;font-weight:600;color:white;">high-demand<span style="color:var(--color-primary);">.jobs</span></span>
+      </div>
+      <div style="display:flex;gap:24px;">
+        <a href="#" style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;">Privacy</a>
+        <a href="#" style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;">Terms</a>
+        <a href="#" style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;">Contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* ============================================================
+   PIXEL Intersections — dataannotation.tech-style
+   Target: [data-pixel-box]
+   ============================================================ */
+
+  var DESKTOP_PIXEL_SIZE = "3.75rem";
+  var DESKTOP_MAX_ROWS   = 4;
+  var MOBILE_PIXEL_SIZE  = "40px";
+  var MOBILE_MAX_ROWS    = 3;
+
+  (function () {
+    'use strict';
+
+    function isMobile() {
+      return window.matchMedia('(max-width: 479px)').matches;
+    }
+
+    function resolveSize(cssValue, referenceEl) {
+      var probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:' + cssValue + ';height:0';
+      (referenceEl || document.body).appendChild(probe);
+      var px = probe.offsetWidth;
+      probe.parentNode.removeChild(probe);
+      return px || 16;
+    }
+
+    function getConfig(el) {
+      return {
+        pixelSizeRaw: isMobile() ? MOBILE_PIXEL_SIZE : DESKTOP_PIXEL_SIZE,
+        maxRows:      isMobile() ? MOBILE_MAX_ROWS   : DESKTOP_MAX_ROWS,
+      };
+    }
+
+    function PixelBox(el) {
+      this.box    = el;
+      this.canvas = el.querySelector('.pixel-box_canvas');
+      this.ctx    = this.canvas.getContext('2d');
+      this.chaos  = parseFloat(el.dataset.pixelChaos || '2.5');
+
+      this.pixelOrder = [];
+      this.progress   = 0;
+
+      this._onResize = debounce(this._onResize.bind(this), 100);
+      this._tick     = this._tick.bind(this);
+
+      this._resize();
+      this._buildOrder();
+      this._computeProgress();
+      this._draw();
+
+      window.addEventListener('resize', this._onResize, { passive: true });
+      requestAnimationFrame(this._tick);
+    }
+
+    PixelBox.prototype._color = function () {
+      return getComputedStyle(this.box).color;
+    };
+
+    PixelBox.prototype._resize = function () {
+      var dpr    = window.devicePixelRatio || 1;
+      var cfg    = getConfig(this.box);
+      var p      = resolveSize(cfg.pixelSizeRaw, this.box);
+      var maxRows = cfg.maxRows;
+
+      this.pixelSize = p;
+
+      var w = this.box.offsetWidth;
+      var h = maxRows * p;
+
+      this.box.style.height    = h + 'px';
+      this.canvas.style.width  = w + 'px';
+      this.canvas.style.height = h + 'px';
+
+      this.canvas.width  = Math.round(w * dpr);
+      this.canvas.height = Math.round(h * dpr);
+
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      this.cols  = Math.ceil(w / p);
+      this.rows  = maxRows;
+      this.total = this.cols * this.rows;
+    };
+
+    PixelBox.prototype._buildOrder = function () {
+      var pixels = [];
+      for (var r = 0; r < this.rows; r++) {
+        for (var c = 0; c < this.cols; c++) {
+          var rowScore = r / Math.max(1, this.rows - 1);
+          pixels.push({ r: r, c: c, key: rowScore + Math.random() * this.chaos });
+        }
+      }
+      pixels.sort(function (a, b) { return b.key - a.key; });
+      this.pixelOrder = pixels;
+    };
+
+    PixelBox.prototype._computeProgress = function () {
+      var rect   = this.box.getBoundingClientRect();
+      var vh     = window.innerHeight;
+      var travel = vh + rect.height;
+      var gone   = vh - rect.top;
+      this.progress = Math.max(0, Math.min(1, gone / travel));
+    };
+
+    PixelBox.prototype._draw = function () {
+      var ctx     = this.ctx;
+      var p       = this.pixelSize;
+      var w       = this.box.offsetWidth;
+      var h       = this.rows * p;
+      var visible = Math.round(this.progress * this.total);
+
+      ctx.clearRect(0, 0, w, h);
+      if (visible === 0) return;
+
+      ctx.fillStyle = this._color();
+      for (var i = 0; i < visible; i++) {
+        var px = this.pixelOrder[i];
+        ctx.fillRect(
+          Math.floor(px.c * p),
+          Math.floor(px.r * p),
+          Math.ceil(p),
+          Math.ceil(p)
+        );
+      }
+    };
+
+    PixelBox.prototype._tick = function () {
+      var prev = this.progress;
+      this._computeProgress();
+      if (this.progress !== prev) this._draw();
+      requestAnimationFrame(this._tick);
+    };
+
+    PixelBox.prototype._onResize = function () {
+      this._resize();
+      this._buildOrder();
+      this._computeProgress();
+      this._draw();
+    };
+
+    function debounce(fn, ms) {
+      var t;
+      return function () {
+        var args = arguments, ctx = this;
+        clearTimeout(t);
+        t = setTimeout(function () { fn.apply(ctx, args); }, ms);
+      };
+    }
+
+    function init() {
+      document.querySelectorAll('[data-pixel-box]').forEach(function (el) {
+        new PixelBox(el);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+</body>
+</html>
