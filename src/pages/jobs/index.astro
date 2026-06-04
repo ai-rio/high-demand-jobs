@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import JobCard from '../../components/JobCard.astro';
+import { getCategories, getCategorySlug } from '../../lib/categories';
+import jobs from '../../data/jobs.json';
+
+const categories = getCategories(jobs);
+---
+
+<Base title="All Jobs — High-Demand Remote Positions" description="Browse all 217 high-demand remote positions across AI, engineering, finance, legal, and more.">
+  <Header />
+  <main>
+    <section style="padding:4rem 0;background:var(--color-bg,#fff);">
+      <div class="container">
+        <h1 style="font-size:2rem;font-weight:700;margin-bottom:0.5rem;">All Jobs</h1>
+        <p style="font-size:0.875rem;color:var(--color-text-secondary,#444);margin-bottom:2rem;">{jobs.length} positions available</p>
+
+        <div class="job-filters">
+          <a href="/jobs" class:list={['filter-btn', { 'filter-btn-active': !Astro.url.searchParams.has('category') }]}>All</a>
+          {categories.map(cat => (
+            <a href={`/jobs?category=${getCategorySlug(cat.id)}`} class:list={['filter-btn', { 'filter-btn-active': Astro.url.searchParams.get('category') === getCategorySlug(cat.id) }]}>{cat.label}</a>
+          ))}
+        </div>
+
+        <div class="job-grid">
+          {jobs.map(job => <JobCard job={job} />)}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .job-filters { display:flex;flex-wrap:wrap;gap:0.375rem;margin-bottom:2rem; }
+  .filter-btn {
+    padding:0.5rem 1rem;
+    font-family:var(--font-mono,'Space Mono',monospace);
+    font-size:0.6875rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    border:1px solid var(--color-border,#e5e5e5);
+    color:var(--color-text-secondary,#444);
+    background:transparent;
+    border-radius:0;
+    transition:all 0.2s var(--ease-smooth,cubic-bezier(0.22,1,0.36,1));
+  }
+  .filter-btn:hover { border-color:var(--color-text,#090909);color:var(--color-text,#090909); }
+  .filter-btn-active { border-color:var(--color-primary,#004cf0);color:var(--color-primary,#004cf0);background:var(--color-primary-bg,#f0f5ff); }
+  .job-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:1rem;
+  }
+</style>

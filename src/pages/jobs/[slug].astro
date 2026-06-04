@@ -1,0 +1,192 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import JobCard from '../../components/JobCard.astro';
+import jobs from '../../data/jobs.json';
+
+export function getStaticPaths() {
+  return jobs.map(job => ({
+    params: { slug: job.slug },
+    props: { job },
+  }));
+}
+
+const { job } = Astro.props;
+
+const salaryDisplay = job.salaryMin && job.salaryMax
+  ? `$${(job.salaryMin/1000).toFixed(0)}K - $${(job.salaryMax/1000).toFixed(0)}K`
+  : job.salaryMin ? `$${(job.salaryMin/1000).toFixed(0)}K`
+  : null;
+
+const hourlyDisplay = job.hourlyMin && job.hourlyMax
+  ? `$${job.hourlyMin} - $${job.hourlyMax}/hr`
+  : job.hourlyMin ? `$${job.hourlyMin}/hr`
+  : null;
+
+const canonical = `https://high-demand-jobs.pages.dev/jobs/${job.slug}`;
+
+const related = jobs
+  .filter(j => j.category === job.category && j.slug !== job.slug)
+  .slice(0, 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: job.title,
+  description: job.description.replace(/<[^>]+>/g, '').substring(0, 5000),
+  datePosted: '2026-01-01',
+  validThrough: '2027-01-01',
+  employmentType: job.type.includes('full-time') ? 'FULL_TIME' : job.type.includes('part-time') ? 'PART_TIME' : 'CONTRACTOR',
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: 'micro1',
+    sameAs: 'https://micro1.ai',
+  },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: job.location || 'Remote',
+      addressCountry: 'US',
+    },
+  },
+  applicantLocationRequirements: {
+    '@type': 'Country',
+    name: 'US',
+  },
+  jobLocationType: 'TELECOMMUTE',
+};
+
+function renderDescription(text: string) {
+  return text.split('\n').reduce((lines, line) => {
+    const t = line.trim();
+    if (!t) return lines;
+    if (t.startsWith('###')) {
+      lines.push(`<h3 class="desc-h3">${t.replace(/^###\s*/, '')}</h3>`);
+    } else if (/^\*\*.+\*\*$/.test(t)) {
+      lines.push(`<h4 class="desc-h4">${t.replace(/\*\*/g, '')}</h4>`);
+    } else {
+      lines.push(`<p class="desc-p">${t}</p>`);
+    }
+    return lines;
+  }, [] as string[]).join('\n');
+}
+---
+
+<Base title={`${job.title} — High-Demand Remote Job`} description={`${job.title}. ${job.type} remote position. ${salaryDisplay || hourlyDisplay || 'Competitive pay'}. Apply with referral bonus.`}>
+  <link rel="canonical" href={canonical} />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2)} />
+
+  <Header />
+  <main>
+    <section class="section">
+      <div class="container narrow">
+        <a href="/jobs" class="back-link">← Back to all jobs</a>
+
+        <h1 class="job-h1">{job.title}</h1>
+
+        <div class="badge-row">
+          {salaryDisplay && <span class="chip chip-salary">{salaryDisplay}</span>}
+          {hourlyDisplay && <span class="chip chip-salary">{hourlyDisplay}</span>}
+          {job.referralBonus > 0 && <span class="chip chip-bonus">${job.referralBonus} bonus</span>}
+          {job.openings > 0 && <span class="chip chip-openings">{job.openings} opening{job.openings > 1 ? 's' : ''}</span>}
+        </div>
+
+        <div class="meta-row">
+          <span><strong>Type:</strong> {job.type}</span>
+          <span><strong>Location:</strong> {job.location}</span>
+        </div>
+
+        {job.skills.length > 0 && (
+          <div class="skills-block">
+            <h3 class="skills-h3">Required Skills</h3>
+            <div class="skill-list">
+              {job.skills.map(s => <span class="skill-tag">{s}</span>)}
+            </div>
+          </div>
+        )}
+
+        <div class="cta-block">
+          <a href={job.affiliateUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">Apply Now →</a>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="desc-block" set:html={renderDescription(job.description)} />
+
+        <hr class="divider" />
+
+        <div class="cta-block">
+          <a href={job.affiliateUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">Apply Now →</a>
+        </div>
+      </div>
+    </section>
+
+    {related.length > 0 && (
+      <section class="section-alt">
+        <div class="container">
+          <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;font-family:var(--font-heading,'Hanken Grotesk',sans-serif);">More {job.category} Jobs</h2>
+          <p style="font-size:0.875rem;color:var(--color-text-secondary,#444);margin-bottom:1.5rem;">Related positions in the same category.</p>
+          <div class="grid-3">
+            {related.map(j => <JobCard job={j} />)}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .section { padding:3rem 0; background:var(--color-bg-alt,#f7f7f7); }
+  .section-alt { padding:3rem 0; background:var(--color-bg,#fff); }
+  .container { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+  .container.narrow { max-width:760px; }
+  .back-link {
+    display:inline-block; margin-bottom:2rem;
+    font-family:var(--font-mono,'Space Mono',monospace); font-size:0.75rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+    color:var(--color-text-muted,#888); text-decoration:none;
+  }
+  .job-h1 { font-size:clamp(1.75rem,3vw,2.5rem); font-weight:700; margin-bottom:1rem; }
+  .badge-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem; }
+  .chip {
+    display:inline-flex; align-items:center; padding:2px 10px;
+    font-family:var(--font-mono,'Space Mono',monospace); font-size:0.75rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .chip-salary { background:var(--color-accent-emerald-light,#e6fae8); color:var(--color-accent-emerald,#04c432); }
+  .chip-bonus { background:var(--color-accent-amber-light,#fef3c7); color:var(--color-accent-amber,#f59e0b); }
+  .chip-openings { background:var(--color-primary-light,#e0ebff); color:var(--color-primary,#004cf0); }
+  .meta-row { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:2rem; font-size:0.875rem; color:var(--color-text-secondary,#444); }
+  .skills-block { margin-bottom:2rem; }
+  .skills-h3 { font-size:0.875rem; font-weight:600; margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.04em; }
+  .skill-list { display:flex; flex-wrap:wrap; gap:0.375rem; }
+  .skill-tag {
+    display:inline-flex; padding:4px 10px;
+    background:var(--color-primary-light,#e0ebff); color:var(--color-primary,#004cf0);
+    font-family:var(--font-mono,'Space Mono',monospace); font-size:0.6875rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .cta-block { margin-bottom:2rem; }
+  .btn-primary {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    padding:0.875rem 2rem;
+    font-family:var(--font-mono,'Space Mono',monospace); font-size:0.8125rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+    text-decoration:none; cursor:pointer;
+    border:2px solid var(--color-primary,#004cf0);
+    background:var(--color-primary,#004cf0); color:white;
+    transition:all 0.2s var(--ease-smooth,cubic-bezier(0.22,1,0.36,1));
+  }
+  .divider { border:none; border-top:1px solid var(--color-border,#e5e5e5); margin:2rem 0; }
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1rem; }
+</style>
+
+<style>
+  .desc-block { line-height:1.7; color:var(--color-text-secondary,#444); }
+  .desc-block :global(.desc-h3) { font-size:1rem; font-weight:600; margin:1.5rem 0 0.75rem; color:var(--color-text,#090909); }
+  .desc-block :global(.desc-h4) { font-weight:600; margin:1.25rem 0 0.5rem; color:var(--color-text,#090909); }
+  .desc-block :global(.desc-p) { margin:0 0 0.75rem; }
+</style>

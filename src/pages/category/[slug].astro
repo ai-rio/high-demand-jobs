@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import JobCard from '../../components/JobCard.astro';
+import jobs from '../../data/jobs.json';
+import { CATEGORY_LABELS, CATEGORY_DESCRIPTIONS, getCategorySlug } from '../../lib/categories';
+
+export function getStaticPaths() {
+  const cats = [...new Set(jobs.map(j => j.category))];
+  return cats.map(cat => ({
+    params: { slug: getCategorySlug(cat) },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const filtered = jobs.filter(j => j.category === category);
+const label = CATEGORY_LABELS[category] || category;
+const desc = CATEGORY_DESCRIPTIONS[category] || '';
+---
+
+<Base title={`${label} Jobs — High-Demand Remote Positions`} description={`${filtered.length} remote ${label} jobs. ${desc}. Apply with referral bonus.`}>
+  <Header />
+  <main>
+    <section class="section">
+      <div class="container">
+        <a href="/categories" class="back-link">← All Categories</a>
+        <h1 class="cat-h1">{label}</h1>
+        <p class="cat-desc">{filtered.length} positions — {desc}</p>
+
+        <div class="job-grid">
+          {filtered.map(j => <JobCard job={j} />)}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .section { padding:4rem 0; background:var(--color-bg,#fff); }
+  .container { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+  .back-link {
+    display:inline-block; margin-bottom:1.5rem;
+    font-family:var(--font-mono,'Space Mono',monospace); font-size:0.75rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+    color:var(--color-text-muted,#888); text-decoration:none;
+  }
+  .cat-h1 { font-size:2rem; font-weight:700; margin-bottom:0.5rem; }
+  .cat-desc { font-size:0.875rem; color:var(--color-text-secondary,#444); margin-bottom:2rem; }
+  .job-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1rem; }
+</style>

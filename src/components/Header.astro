@@ -1,0 +1,56 @@
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <svg width="36" height="36" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <rect width="28" height="28" rx="4" fill="#04c432"/>
+        <text x="44" y="92" font-size="72" font-weight="800" fill="#090909" letter-spacing="-4">hd</text>
+      </svg>
+      Jobs
+    </a>
+    <nav class="nav">
+      <a href="/jobs">All Jobs</a>
+      <a href="/categories">Categories</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    background: var(--color-bg, #fff);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-text, #090909);
+    font-family: var(--font-heading, 'Hanken Grotesk', sans-serif);
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  .nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .nav a {
+    text-decoration: none;
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary, #444);
+  }
+</style>

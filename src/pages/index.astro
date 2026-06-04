@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getCategories, getCategorySlug, CATEGORY_DESCRIPTIONS } from '../lib/categories';
+import jobs from '../data/jobs.json';
+
+const categories = getCategories(jobs);
+const totalOpenings = jobs.reduce((s, j) => s + j.openings, 0);
+const maxSalary = Math.max(...jobs.map(j => j.salaryMax || 0));
+const minSalary = Math.min(...jobs.map(j => j.salaryMin || Infinity).filter(n => n > 0));
+---
+
+<Base title="High-Demand Jobs — Remote AI & Tech Roles" description="Browse 217 high-demand remote positions. AI, engineering, finance, legal, and more. Apply with referral bonus.">
+  <Header />
+  <main>
+    <section style={{
+      padding: '6rem 0 4rem',
+      background: 'var(--color-bg)',
+    }}>
+      <div class="container">
+        <p style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.8125rem',
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          color: 'var(--color-primary)',
+          marginBottom: '1rem',
+        }}>micro1 Affiliate Program</p>
+        <h1 style={{
+          fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+          fontWeight: 700,
+          color: 'var(--color-text)',
+          marginBottom: '1rem',
+          maxWidth: '720px',
+        }}>High-Demand Remote Jobs</h1>
+        <p style={{
+          fontSize: '1.125rem',
+          color: 'var(--color-text-secondary)',
+          lineHeight: 1.7,
+          maxWidth: '600px',
+          marginBottom: '2rem',
+        }}>
+          217 positions across AI, engineering, finance, legal, and more. Every role includes a referral bonus when you apply through our partner link.
+        </p>
+        <div style={{
+          display: 'flex',
+          gap: '2rem',
+          flexWrap: 'wrap',
+          marginBottom: '2rem',
+        }}>
+          <div><span style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 700, display: 'block' }}>{jobs.length}</span><span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>Open Positions</span></div>
+          <div><span style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 700, display: 'block' }}>{categories.length}</span><span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>Categories</span></div>
+          <div><span style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 700, display: 'block' }}>{totalOpenings > 0 ? totalOpenings : '1K+'}</span><span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>Total Openings</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section style={{
+      padding: '4rem 0',
+      background: 'var(--color-bg-alt)',
+    }}>
+      <div class="container">
+        <h2 style={{
+          fontSize: '1.75rem',
+          fontWeight: 700,
+          marginBottom: '0.5rem',
+        }}>Browse by Category</h2>
+        <p style={{
+          fontSize: '0.875rem',
+          color: 'var(--color-text-secondary)',
+          marginBottom: '2rem',
+        }}>Find roles matching your expertise and experience.</p>
+        <div class="cat-grid">
+          {categories.map(cat => (
+            <a href={`/category/${getCategorySlug(cat.id)}`} class="cat-card">
+              <div class="cat-card-hdr">
+                <h3 class="cat-card-title">{cat.label}</h3>
+                <span class="cat-card-count">{cat.count}</span>
+              </div>
+              <p class="cat-card-desc">{CATEGORY_DESCRIPTIONS[cat.id] || ''}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section style={{ padding: '4rem 0', background: 'var(--color-bg)' }}>
+      <div class="container" style={{ textAlign: 'center' }}>
+        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
+          Referral code: <code style={{ background: 'var(--color-bg-alt)', padding: '2px 8px', fontFamily: 'var(--font-mono)' }}>dcfa4fa4-2bf3-4187-82c9-9d3dd4db4ddb</code>
+        </p>
+        <a href="/jobs" style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          padding: '0.875rem 2rem',
+          marginTop: '1rem',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.8125rem',
+          textTransform: 'uppercase',
+          letterSpacing: '0.04em',
+          textDecoration: 'none',
+          border: '2px solid var(--color-primary)',
+          color: 'white',
+          background: 'var(--color-primary)',
+          borderRadius: 0,
+        }}>
+          View All Jobs →
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; }
+  .cat-card {
+    display:block; text-decoration:none;
+    border:2px solid var(--color-border,#e5e5e5);
+    padding:1.5rem; background:var(--color-bg-card,#fff);
+    transition:all 0.3s var(--ease-smooth,cubic-bezier(0.22,1,0.36,1));
+  }
+  .cat-card-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; }
+  .cat-card-title { margin:0; font-size:1rem; font-weight:600; color:var(--color-text,#090909); font-family:var(--font-heading,'Hanken Grotesk',sans-serif); }
+  .cat-card-count { font-family:var(--font-mono,'Space Mono',monospace); font-size:0.75rem; color:var(--color-text-muted,#888); }
+  .cat-card-desc { margin:0; font-size:0.8125rem; color:var(--color-text-secondary,#444); line-height:1.5; }
+</style>

@@ -1,0 +1,13 @@
+{
+  "name": "high-demand-jobs",
+  "pages_build_output_dir": "dist",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "kv_namespaces": [
+    {
+      "binding": "JOBS_KV",
+      "id": "",
+      "preview_id": ""
+    }
+  ]
+}

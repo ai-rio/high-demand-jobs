@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500 800;
+  src: url('https://fonts.gstatic.com/s/hankengrotesk/v8/ieVq2YZDLWuGJ_nz8bBDNkRg1JQ.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  src: url('https://fonts.gstatic.com/s/inter/v18/UqyC8P7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7j7' inset) format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/spacemono/v13/i7dPIFZifjKcF5LAWd2UEY8.woff2') format('woff2');
+  font-display: swap;
+}
+
+@theme {
+  --font-heading: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  --color-primary: #004cf0;
+  --color-primary-dark: #003dbf;
+  --color-primary-light: #e0ebff;
+  --color-primary-bg: #f0f5ff;
+
+  --color-accent-emerald: #04c432;
+  --color-accent-emerald-light: #e6fae8;
+  --color-accent-amber: #f59e0b;
+  --color-accent-amber-light: #fef3c7;
+  --color-accent-pink: #fd62ef;
+
+  --color-text: #090909;
+  --color-text-secondary: #444;
+  --color-text-muted: #888;
+  --color-bg: #fff;
+  --color-bg-alt: #f7f7f7;
+  --color-bg-card: #fff;
+  --color-border: #e5e5e5;
+
+  --spacing-section: 6rem;
+
+  --radius-card: 0;
+  --radius-badge: 0;
+  --radius-btn: 0;
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.6s var(--ease-smooth) forwards;
+}
+
+.fade-up-d1 { animation-delay: 0.1s; }
+.fade-up-d2 { animation-delay: 0.2s; }
+.fade-up-d3 { animation-delay: 0.3s; }
+.fade-up-d4 { animation-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

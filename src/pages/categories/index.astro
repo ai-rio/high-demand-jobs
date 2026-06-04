@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import jobs from '../../data/jobs.json';
+import { CATEGORY_LABELS, CATEGORY_DESCRIPTIONS, getCategorySlug } from '../../lib/categories';
+
+const counts = new Map<string, number>();
+for (const job of jobs) {
+  counts.set(job.category, (counts.get(job.category) || 0) + 1);
+}
+const categories = Array.from(counts.entries())
+  .map(([id, count]) => ({ id, label: CATEGORY_LABELS[id] || id, count, desc: CATEGORY_DESCRIPTIONS[id] || '' }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<Base title="Categories — High-Demand Remote Jobs" description="Browse 217 remote jobs by category: AI, engineering, finance, legal, and more.">
+  <Header />
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="cat-h1">Browse by Category</h1>
+        <p class="cat-desc">{categories.length} categories, {jobs.length} total positions</p>
+
+        <div class="cat-grid">
+          {categories.map(cat => (
+            <a href={`/category/${getCategorySlug(cat.id)}`} class="cat-card">
+              <div class="cat-card-header">
+                <h3 class="cat-card-title">{cat.label}</h3>
+                <span class="cat-count">{cat.count}</span>
+              </div>
+              <p class="cat-card-desc">{cat.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .section { padding:4rem 0; background:var(--color-bg,#fff); }
+  .container { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+  .cat-h1 { font-size:2rem; font-weight:700; margin-bottom:0.5rem; }
+  .cat-desc { font-size:0.875rem; color:var(--color-text-secondary,#444); margin-bottom:2rem; }
+  .cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; }
+  .cat-card {
+    display:block; text-decoration:none;
+    border:2px solid var(--color-border,#e5e5e5);
+    padding:1.5rem; background:var(--color-bg-card,#fff);
+    transition:all 0.3s var(--ease-smooth,cubic-bezier(0.22,1,0.36,1));
+  }
+  .cat-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; }
+  .cat-card-title { margin:0; font-size:1rem; font-weight:600; color:var(--color-text,#090909); font-family:var(--font-heading,'Hanken Grotesk',sans-serif); }
+  .cat-count { font-family:var(--font-mono,'Space Mono',monospace); font-size:0.75rem; color:var(--color-text-muted,#888); }
+  .cat-card-desc { margin:0; font-size:0.8125rem; color:var(--color-text-secondary,#444); line-height:1.5; }
+</style>
