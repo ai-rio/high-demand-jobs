@@ -88,21 +88,17 @@
 
   .display {
     font-family: 'Hanken Grotesk', Tahoma, sans-serif;
-    font-size: 94px;
+    font-size: clamp(56px, 5.5vw, 94px);
     font-weight: 600;
     line-height: 1.0;
     letter-spacing: -0.03em;
   }
 
-  h1 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 70px; font-weight: 600; line-height: 1.0; letter-spacing: -0.03em; }
-  h2 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
-  h3 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: 32px; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
+  h1 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: clamp(40px, 4.5vw, 70px); font-weight: 600; line-height: 1.0; letter-spacing: -0.03em; }
+  h2 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: clamp(36px, 4vw, 64px); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+  h3 { font-family: 'Hanken Grotesk', Tahoma, sans-serif; font-size: clamp(24px, 2.5vw, 32px); font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
 
   @media (max-width: 768px) {
-    .display { font-size: 56px; }
-    h1 { font-size: 40px; }
-    h2 { font-size: 36px; }
-    h3 { font-size: 24px; }
     .section { padding: var(--space-16) 0; }
   }
 
@@ -246,7 +242,7 @@
   }
   .card:hover {
     border-color: var(--color-primary);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 76, 240, 0.10);
   }
 
   .card-blue {
@@ -295,11 +291,11 @@
     border-radius: 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
-  .swatch-label { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #666; }
-  .swatch-hex { font-family: 'Space Mono', monospace; font-size: 10px; color: #999; }
+  .swatch-label { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--color-text-muted); }
+  .swatch-hex { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--color-text-muted); }
 
   .type-demo { margin: 20px 0; }
-  .type-demo .label { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 8px; }
+  .type-demo .label { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin-bottom: 8px; }
 
   hr { border: none; border-top: 1px solid var(--color-border); margin: 0; }
 
@@ -338,7 +334,7 @@
   }
   .hero-stat-value {
     font-family: 'Hanken Grotesk', Tahoma, sans-serif;
-    font-size: 48px;
+    font-size: clamp(36px, 3vw, 48px);
     font-weight: 600;
     line-height: 1;
   }
@@ -351,6 +347,219 @@
   @media (max-width: 768px) {
     .hero-stats { flex-direction: column; gap: 24px; }
   }
+  [data-theme="dark"] {
+    --color-primary: #3b82f6;
+    --color-primary-dark: #60a5fa;
+    --color-primary-light: #1e3a5f;
+    --color-bg: #0a0a0a;
+    --color-bg-alt: #141414;
+    --color-bg-dark: #000000;
+    --color-bg-card: #181818;
+    --color-text: #e5e5e5;
+    --color-text-secondary: #a0a0a0;
+    --color-text-muted: #707070;
+    --color-border: #2a2a2a;
+    --color-border-light: #222222;
+  }
+
+  [data-theme="dark"] .badge-bonus {
+    background: #4a3a0a;
+    color: #fbbf24;
+  }
+  [data-theme="dark"] .badge-bonus-high {
+    background: #92400e;
+    color: #fef3c7;
+  }
+  [data-theme="dark"] .badge-salary {
+    background: #065f46;
+    color: #a7f3d0;
+  }
+  [data-theme="dark"] .badge-remote {
+    background: #272727;
+    color: #d4d4d4;
+  }
+  [data-theme="dark"] .badge-openings {
+    background: #e5e5e5;
+    color: #0a0a0a;
+  }
+  [data-theme="dark"] .skill-tag {
+    background: #272727;
+    color: #a0a0a0;
+  }
+  [data-theme="dark"] .card {
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  [data-theme="dark"] .card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 24px rgba(59, 130, 246, 0.08);
+  }
+  [data-theme="dark"] .step-number {
+    color: white;
+    opacity: 0.06;
+  }
+  [data-theme="dark"] .swatch-label {
+    color: var(--color-text-secondary);
+  }
+  [data-theme="dark"] .swatch-hex {
+    color: var(--color-text-muted);
+  }
+  [data-theme="dark"] .type-demo .label {
+    color: var(--color-text-muted);
+  }
+  [data-theme="dark"] .section-alt .eyebrow {
+    color: #3b82f6;
+  }
+  [data-theme="dark"] .badge-white {
+    border-color: rgba(255,255,255,0.2);
+  }
+  [data-theme="dark"] .btn-primary {
+    background: white;
+    color: #0a0a0a;
+    border-color: white;
+  }
+  [data-theme="dark"] .btn-primary:hover {
+    background: #d4d4d4;
+    border-color: #d4d4d4;
+    color: #0a0a0a;
+  }
+  [data-theme="dark"] .btn-secondary:hover {
+    background: white;
+    color: #0a0a0a;
+    border-color: white;
+  }
+  [data-theme="dark"] .card-blue {
+    background: #1d4ed8;
+  }
+  [data-theme="dark"] .card-blue .btn-white:hover {
+    background: white;
+    color: #0a0a0a;
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    font-size: 14px;
+    line-height: 1;
+  }
+  .theme-toggle:hover {
+    border-color: var(--color-text);
+  }
+  [data-theme="dark"] .theme-toggle {
+    border-color: var(--color-border);
+  }
+  [data-theme="dark"] .theme-toggle:hover {
+    border-color: var(--color-text);
+  }
+
+  .search-wrap {
+    position: relative;
+    margin-bottom: var(--space-8);
+  }
+  .search-input {
+    display: block;
+    width: 100%;
+    padding: 20px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.3s var(--ease-smooth);
+  }
+  .search-input::placeholder {
+    color: var(--color-text-muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .search-input:focus {
+    border-color: var(--color-primary);
+  }
+  [data-theme="dark"] .search-input {
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  [data-theme="dark"] .search-input:focus {
+    border-color: var(--color-primary);
+  }
+
+  .category-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--space-8);
+  }
+  .category-btn {
+    padding: 8px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s var(--ease-smooth);
+  }
+  .category-btn:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+  }
+  .category-btn.active {
+    background: var(--color-text);
+    color: white;
+    border-color: var(--color-text);
+  }
+  [data-theme="dark"] .category-btn.active {
+    background: white;
+    color: #0a0a0a;
+    border-color: white;
+  }
+
+  .results-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .results-empty {
+    text-align: center;
+    padding: var(--space-16) 0;
+    color: var(--color-text-muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .results-empty strong {
+    color: var(--color-text);
+    font-family: 'Hanken Grotesk', Tahoma, sans-serif;
+    font-size: 24px;
+    display: block;
+    margin-bottom: 8px;
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
   .pixel-box {
     position: relative;
     z-index: 2;
@@ -372,6 +581,30 @@
   @media (max-width: 479px) {
     .pixel-box { height: 9.75rem; }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .marquee-content {
+      animation: none;
+    }
+    .pixel-box_canvas {
+      display: none;
+    }
+    .pixel-box {
+      background: var(--color-bg-alt);
+      height: 2rem;
+    }
+    .pixel-box.is-blue { background: var(--color-primary); }
+    .pixel-box.is-white { background: white; }
+    .pixel-box.is-dark { background: var(--color-bg-dark); }
+    .btn:hover .icon-wrap {
+      transform: none;
+    }
+  }
 </style>
 </head>
 <body>
@@ -381,8 +614,8 @@
     <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;">
       <a href="#" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
         <svg width="36" height="21" viewBox="0 0 32 19" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-          <path d="M25.6057 0.0015H21.6465L25.3332 10.5584L26.3799 13.7285L28.2352 18.8243H31.9998L25.6057 0.0015Z" fill="#090909"/>
-          <path d="M10.4012 0.0015H7.5291V3.7661H10.3877C14.1029 3.7436 16.7054 5.536 16.7054 9.4129C16.7054 13.2898 14.1044 15.0822 10.3877 15.0598H7.5291V3.7661H3.7645V15.0598H0V18.8243H10.4012C16.0001 18.8243 20.7066 15.217 20.7066 9.4114C20.7066 3.6058 16.0001 0 10.4012 0V0.0015Z" fill="#090909"/>
+          <path d="M25.6057 0.0015H21.6465L25.3332 10.5584L26.3799 13.7285L28.2352 18.8243H31.9998L25.6057 0.0015Z" fill="currentColor"/>
+          <path d="M10.4012 0.0015H7.5291V3.7661H10.3877C14.1029 3.7436 16.7054 5.536 16.7054 9.4129C16.7054 13.2898 14.1044 15.0822 10.3877 15.0598H7.5291V3.7661H3.7645V15.0598H0V18.8243H10.4012C16.0001 18.8243 20.7066 15.217 20.7066 9.4114C20.7066 3.6058 16.0001 0 10.4012 0V0.0015Z" fill="currentColor"/>
           <rect x="0" y="0" width="4" height="4" rx="1" fill="#04c432"/>
         </svg>
         <span style="font-family:'Hanken Grotesk',Tahoma,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.02em;">high-demand<span style="color:var(--color-primary);">.jobs</span></span>
@@ -392,6 +625,7 @@
         <a href="#" style="font-size:14px;color:var(--color-text-secondary);text-decoration:none;transition:color 0.2s;">Categories</a>
         <a href="#" style="font-size:14px;color:var(--color-text-secondary);text-decoration:none;transition:color 0.2s;">Top Bonuses</a>
         <a class="btn btn-primary" href="#" style="padding:10px 24px;font-size:12px;">Apply Now</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">⊙</button>
       </div>
     </div>
   </div>
@@ -401,7 +635,7 @@
   <div class="container">
     <div style="max-width:900px;">
       <p class="eyebrow" style="color:rgba(255,255,255,0.5);">217 active positions · Remote · Full-time & Contract</p>
-      <h1 style="color:white;font-size:94px;margin-bottom:20px;">
+      <h1 class="display" style="color:white;margin-bottom:20px;">
         Train AI.<br>Get Paid.
       </h1>
       <p style="font-size:20px;color:rgba(255,255,255,0.7);max-width:600px;line-height:1.4;margin-bottom:32px;">
@@ -529,7 +763,7 @@
         <div class="type-demo" style="margin-top:24px;">
           <p class="label">Monospace — Space Mono (for CTAs & tags)</p>
           <p style="font-family:'Space Mono',monospace;font-size:14px;">APPLY NOW  →</p>
-          <p style="font-family:'Space Mono',monospace;font-size:10px;margin-top:8px;color:#666;">Machine Learning  ·  Python  ·  Financial Planning</p>
+          <p style="font-family:'Space Mono',monospace;font-size:10px;margin-top:8px;color:var(--color-text-muted);">Machine Learning  ·  Python  ·  Financial Planning</p>
         </div>
       </div>
     </div>
@@ -661,6 +895,29 @@
 
 <div data-pixel-box class="pixel-box is-dark"><canvas class="pixel-box_canvas"></canvas></div>
 
+<section class="section-alt" id="searchDemo">
+  <div class="container">
+    <p class="eyebrow">Search & Browse</p>
+    <h2 style="margin-bottom:var(--space-8);">Find Your Role</h2>
+
+    <div class="category-bar" id="categoryBar"></div>
+
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search by title, skill, or keyword…">
+    </div>
+
+    <p class="results-count" id="resultsCount">18 jobs</p>
+
+    <div id="resultsGrid" class="grid-3"></div>
+    <div class="results-empty" id="resultsEmpty" hidden>
+      <strong>No matches</strong>
+      Try a different search or category
+    </div>
+  </div>
+</section>
+
+<div data-pixel-box class="pixel-box is-blue"><canvas class="pixel-box_canvas"></canvas></div>
+
 <section class="section section-dark">
   <div class="container">
     <p class="eyebrow" style="color:rgba(255,255,255,0.4);">Process</p>
@@ -723,6 +980,162 @@
   </div>
 </section>
 
+<script>
+  (function () {
+    var toggle = document.getElementById('themeToggle');
+    var html = document.documentElement;
+    var stored = localStorage.getItem('theme');
+    if (stored === 'dark') html.setAttribute('data-theme', 'dark');
+    if (toggle) {
+      toggle.textContent = html.getAttribute('data-theme') === 'dark' ? '◉' : '⊙';
+      toggle.addEventListener('click', function () {
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          toggle.textContent = '⊙';
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          toggle.textContent = '◉';
+        }
+      });
+    }
+  })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  if (typeof MiniSearch === 'undefined') return;
+
+  var JOBS = [
+    { id:"1",  title:"Member of Technical Staff (Frontier AI)",    category:"AI Research & Engineering",  salary:"$600K - $2M/yr", bonus:"2000", type:"Full-time", openings:1,  skills:["RL","ML Data","Research","Ops"],              featured:true  },
+    { id:"2",  title:"Data Scientist (NLP)",                       category:"AI Research & Engineering",  salary:"$180K - $350K/yr", bonus:"1000", type:"Full-time", openings:5,  skills:["NLP","Python","Statistics"],                    featured:false },
+    { id:"3",  title:"Python Robotics Engineer",                   category:"AI Research & Engineering",  salary:"$150K - $250K/yr", bonus:"1000", type:"Full-time", openings:5,  skills:["Python","Robotics","ROS"],                      featured:false },
+    { id:"4",  title:"Full-Stack Engineer",                        category:"Software Engineering",       salary:"$150K - $250K/yr", bonus:"1000", type:"Full-time", openings:10, skills:["React","Node","TypeScript"],                    featured:false },
+    { id:"5",  title:"Backend Engineer (Python)",                  category:"Software Engineering",       salary:"$140K - $220K/yr", bonus:"500",  type:"Full-time", openings:8,  skills:["Python","FastAPI","Postgres"],                  featured:false },
+    { id:"6",  title:"Chinese Language Expert",                    category:"Language & Translation",     salary:"$32 - $95/hr",    bonus:"500",  type:"Full-time", openings:20, skills:["Chinese","NLP","Detail"],                       featured:false },
+    { id:"7",  title:"Hebrew Translator",                          category:"Language & Translation",     salary:"$25 - $60/hr",    bonus:"100",  type:"Contract",  openings:15, skills:["Hebrew","Translation"],                        featured:false },
+    { id:"8",  title:"French Language Expert",                     category:"Language & Translation",     salary:"$28 - $70/hr",    bonus:"500",  type:"Contract",  openings:18, skills:["French","Translation","Culture"],               featured:false },
+    { id:"9",  title:"Financial Advisor",                          category:"Finance & Accounting",       salary:"$120K - $180K/yr",bonus:"500",  type:"Full-time", openings:3,  skills:["Financial Planning","Series 7"],                featured:false },
+    { id:"10", title:"Financial Planning & Analysis Expert",       category:"Finance & Accounting",       salary:"$45 - $65/hr",    bonus:"100",  type:"Contract",  openings:50, skills:["FP&A","SaaS","Modeling"],                      featured:true  },
+    { id:"11", title:"Financial Accountant",                       category:"Finance & Accounting",       salary:"$80K - $120K/yr", bonus:"500",  type:"Full-time", openings:7,  skills:["Accounting","GAAP","Excel"],                    featured:false },
+    { id:"12", title:"Corporate Attorney",                         category:"Legal",                     salary:"$200K - $350K/yr",bonus:"1000", type:"Full-time", openings:2,  skills:["Legal Research","Contracts","IP"],              featured:false },
+    { id:"13", title:"General Counsel",                            category:"Legal",                     salary:"$250K - $400K/yr",bonus:"2000", type:"Full-time", openings:1,  skills:["Legal","Compliance","IP"],                      featured:true  },
+    { id:"14", title:"Medical Writer",                             category:"Healthcare & Science",      salary:"$40 - $80/hr",    bonus:"500",  type:"Contract",  openings:12, skills:["Medical Writing","Clinical Research"],          featured:false },
+    { id:"15", title:"UI/UX Designer",                             category:"Creative & Design",         salary:"$100K - $160K/yr",bonus:"500",  type:"Full-time", openings:4,  skills:["Figma","Design Systems","Prototyping"],         featured:false },
+    { id:"16", title:"Presentation Designer",                      category:"Creative & Design",         salary:"$60K - $100K/yr", bonus:"100",  type:"Contract",  openings:3,  skills:["PowerPoint","Design","Storytelling"],           featured:false },
+    { id:"17", title:"Cocos2d-x Developer",                        category:"Game Development",          salary:"$80K - $150K/yr", bonus:"500",  type:"Full-time", openings:6,  skills:["Cocos2d-x","C++","Mobile"],                     featured:false },
+    { id:"18", title:"Growth Marketing Manager",                   category:"Business & Operations",     salary:"$130K - $200K/yr",bonus:"1000", type:"Full-time", openings:3,  skills:["Growth","Analytics","SEO"],                     featured:false },
+  ];
+
+  var CATEGORIES = [
+    { id:"",                        label:"All" },
+    { id:"AI Research & Engineering", label:"AI Research" },
+    { id:"Software Engineering",     label:"Engineering" },
+    { id:"Language & Translation",   label:"Language" },
+    { id:"Finance & Accounting",     label:"Finance" },
+    { id:"Legal",                    label:"Legal" },
+    { id:"Healthcare & Science",     label:"Healthcare" },
+    { id:"Creative & Design",        label:"Creative" },
+    { id:"Game Development",         label:"Game Dev" },
+    { id:"Business & Operations",    label:"Business" },
+  ];
+
+  var miniSearch = new MiniSearch({
+    fields: ['title', 'skills', 'category'],
+    storeFields: ['title','category','salary','bonus','type','openings','skills','featured'],
+    searchOptions: { boost: { title: 3, skills: 2, category: 1 }, fuzzy: 0.2, prefix: true }
+  });
+  miniSearch.addAll(JOBS);
+
+  var activeCategory = '';
+  var searchQuery = '';
+
+  var categoryBar = document.getElementById('categoryBar');
+  var searchInput = document.getElementById('searchInput');
+  var resultsGrid = document.getElementById('resultsGrid');
+  var resultsCount = document.getElementById('resultsCount');
+  var resultsEmpty = document.getElementById('resultsEmpty');
+
+  function renderCategories() {
+    categoryBar.innerHTML = CATEGORIES.map(function (c) {
+      return '<button class="category-btn' + (c.id === activeCategory ? ' active' : '') + '" data-category="' + c.id + '">' + c.label + '</button>';
+    }).join('');
+  }
+
+  function renderCard(job) {
+    var featured = job.featured;
+    var badgeHtml;
+    if (featured) {
+      badgeHtml = '<span class="badge badge-white">' + job.salary + '</span>' +
+        (job.bonus ? '<span class="badge badge-bonus">$' + job.bonus + ' bonus</span>' : '');
+    } else {
+      var bonusClass = parseInt(job.bonus) >= 1000 ? 'badge-bonus-high' : 'badge-bonus';
+      badgeHtml = '<span class="badge badge-salary">' + job.salary + '</span>' +
+        (job.bonus ? '<span class="badge ' + bonusClass + '">$' + job.bonus + ' bonus</span>' : '');
+    }
+    var skillHtml = job.skills.map(function (s) {
+      var style = featured ? 'style="background:rgba(255,255,255,0.15);color:white;"' : '';
+      return '<span class="skill-tag" ' + style + '>' + s + '</span>';
+    }).join('');
+    var btnClass = featured ? 'btn-white' : 'btn-primary';
+    return '<div class="' + (featured ? 'card card-blue' : 'card') + '">' +
+      '<div class="card-badges">' + badgeHtml + '</div>' +
+      '<h3 class="card-title"' + (featured ? ' style="color:white;"' : '') + '>' + job.title + '</h3>' +
+      '<div class="card-meta"' + (featured ? ' style="color:rgba(255,255,255,0.7);"' : '') + '>' +
+        '<span>' + job.type + '</span><span>·</span><span>' + job.openings + ' opening' + (job.openings > 1 ? 's' : '') + '</span>' +
+      '</div>' +
+      '<div class="card-skills">' + skillHtml + '</div>' +
+      '<a class="btn ' + btnClass + '" href="#" style="margin-top:8px;width:100%;justify-content:center;">Apply Now<span class="icon-wrap">→</span></a>' +
+    '</div>';
+  }
+
+  function renderResults() {
+    var results;
+    if (searchQuery.trim()) {
+      results = miniSearch.search(searchQuery, {
+        boost: { title: 3, skills: 2, category: 1 },
+        fuzzy: 0.2,
+        prefix: true
+      }).map(function (r) { return JOBS.find(function (j) { return j.id === r.id; }); }).filter(Boolean);
+    } else {
+      results = JOBS;
+    }
+    if (activeCategory) {
+      results = results.filter(function (j) { return j.category === activeCategory; });
+    }
+
+    if (results.length === 0) {
+      resultsGrid.innerHTML = '';
+      resultsCount.textContent = '0 jobs';
+      resultsEmpty.removeAttribute('hidden');
+      return;
+    }
+    resultsEmpty.setAttribute('hidden', '');
+    resultsCount.textContent = results.length + ' job' + (results.length > 1 ? 's' : '') + (activeCategory ? ' in ' + activeCategory : '');
+    resultsGrid.innerHTML = results.map(renderCard).join('');
+  }
+
+  categoryBar.addEventListener('click', function (e) {
+    var btn = e.target.closest('.category-btn');
+    if (!btn) return;
+    activeCategory = btn.dataset.category;
+    renderCategories();
+    renderResults();
+  });
+
+  searchInput.addEventListener('input', function () {
+    searchQuery = this.value;
+    renderResults();
+  });
+
+  renderCategories();
+  renderResults();
+})();
+</script>
 <script>
   /* ============================================================
    PIXEL Intersections — dataannotation.tech-style
